@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "support_ops"
+version = "1.0.0"
+description = "Tier 1 Customer Support Triaging and Management Environment"
+dependencies = [
+    "openenv-core>=0.1.0",
+    "pydantic>=2.0.0",
+    "openai>=1.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "python-dotenv>=1.0.0"
+]
+
+[project.scripts]
+server = "server.app:main"

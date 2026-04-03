@@ -1,0 +1,16 @@
+spec_version: "1.0"
+name: "support_ops"
+description: "Tier 1 Customer Support Triaging and Management Environment"
+version: "1.0.0"
+entrypoint: "support_ops.env:SupportOpsEnv"
+models:
+  action: "support_ops.schemas:Action"
+  observation: "support_ops.schemas:Observation"
+  reward: "support_ops.schemas:Reward"
+tasks:
+  - name: "task_easy"
+    description: "Handle simple missing item report and issue replacement."
+  - name: "task_medium"
+    description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
+  - name: "task_hard"
+    description: "Multi-system correlation resolving an April double-charge glitch."
