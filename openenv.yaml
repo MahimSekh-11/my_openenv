@@ -10,7 +10,19 @@ models:
 tasks:
   - name: "task_easy"
     description: "Handle simple missing item report and issue replacement."
+    score: 0.5
+    graders:
+      - type: "match"
+        score: 0.5
   - name: "task_medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
+    score: 0.5
+    graders:
+      - type: "match"
+        score: 0.5
   - name: "task_hard"
     description: "Multi-system correlation resolving an April double-charge glitch."
+    score: 0.5
+    graders:
+      - type: "match"
+        score: 0.5
