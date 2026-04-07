@@ -48,7 +48,7 @@ class SupportOpsEnv:
         """Resets to initial observation per OpenEnv Spec"""
         self.current_ticket = self.tickets.get(self.task_name, self.tickets["task_easy"])
         self.resolved = False
-        self.score = 0.0
+        self.score = 0.01
         self.actions_taken = []
         return self._get_obs("Environment starting. You have 1 unread ticket in queue.")
 
@@ -125,8 +125,8 @@ class SupportOpsEnv:
                 self.resolved = True
                 feedback = f"System: Message sent to customer. Ticket closed."
                 
-                # Top up to exactly 1.0 on correct resolution
-                target_balance = max(0.0, 1.0 - self.score)
+                # Top up to exactly 0.99 on correct resolution
+                target_balance = max(0.0, 0.99 - self.score)
                 if self.task_name == "task_easy":
                     if "replace" in msg and ("apolog" in msg or "sorry" in msg):
                         reward_delta += target_balance
@@ -152,7 +152,7 @@ class SupportOpsEnv:
 
         self.score += reward_delta
         # Clamp environment output values
-        self.score = max(0.0, min(1.0, self.score))
+        self.score = max(0.01, min(0.99, self.score))
         return self._get_obs(feedback), reward_delta, done, {"reason": feedback}
 
     def _get_obs(self, feedback: str) -> Observation:
