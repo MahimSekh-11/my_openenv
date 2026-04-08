@@ -8,21 +8,24 @@ models:
   observation: "support_ops.schemas:Observation"
   reward: "support_ops.schemas:Reward"
 tasks:
-  - name: "task_easy"
+  - id: "task_easy"
+    name: "Task Easy"
     description: "Handle simple missing item report and issue replacement."
-    score: 0.5
+    score: 0.9
     graders:
       - type: "match"
-        score: 0.5
-  - name: "task_medium"
+        score: 0.9
+  - id: "task_medium"
+    name: "Task Medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
-    score: 0.5
+    score: 0.9
     graders:
       - type: "match"
-        score: 0.5
-  - name: "task_hard"
+        score: 0.9
+  - id: "task_hard"
+    name: "Task Hard"
     description: "Multi-system correlation resolving an April double-charge glitch."
-    score: 0.5
+    score: 0.9
     graders:
       - type: "match"
-        score: 0.5
+        score: 0.9
