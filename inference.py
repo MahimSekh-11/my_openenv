@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from support_ops.env import SupportOpsEnv
 
+def clamp_fractional_score(value: float) -> float:
+    """Keep emitted scores strictly inside (0, 1) for validator compatibility."""
+    return max(0.01, min(0.99, float(value)))
+
 def run_inference():
     # Automatically load environment variables from .env
     load_dotenv()
@@ -70,10 +74,11 @@ Step-by-step guidance:
             
             # Step the environment
             obs, reward, done, info = env.step(action)
-            rewards.append(reward)
+            safe_reward = clamp_fractional_score(reward)
+            rewards.append(safe_reward)
             
             # Output Mandatory STEP log format exactly
-            print(f"[STEP] step={step_count} action={action_str} reward={reward:.2f} done={str(done).lower()} error=null", flush=True)
+            print(f"[STEP] step={step_count} action={action_str} reward={safe_reward:.2f} done={str(done).lower()} error=null", flush=True)
             
             # Attach to memory for the next loop
             messages.append({"role": "assistant", "content": raw_action})
@@ -82,7 +87,9 @@ Step-by-step guidance:
         except Exception as e:
             # Handle internal LLM parsing failure loop gracefully
             err_msg = str(e).replace('"', "'").replace("\n", "")
-            print(f"[STEP] step={step_count} action=parse_fail reward=0.00 done=false error=\"{err_msg}\"", flush=True)
+            safe_reward = clamp_fractional_score(0.0)
+            rewards.append(safe_reward)
+            print(f"[STEP] step={step_count} action=parse_fail reward={safe_reward:.2f} done=false error=\"{err_msg}\"", flush=True)
             messages.append({"role": "user", "content": f"Format error: Please output valid JSON matching system instructions."})
     
     # Calculate final status
