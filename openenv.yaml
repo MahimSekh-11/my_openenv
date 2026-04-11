@@ -19,16 +19,58 @@ tasks:
     name: "Task Easy"
     description: "Handle simple missing item report and issue replacement."
     difficulty: "easy"
-    grader: "support_ops.graders:grade_task_easy"
+    graders:
+      - name: task_easy_grader
+        type: python
+        source: |
+          def _clamp(score): return max(0.01, min(0.99, float(score)))
+          def grade(sample, item):
+              msg = ""
+              actions = []
+              if isinstance(sample, dict):
+                  for act in sample.get("action_history", []):
+                      cmd = act.get("command")
+                      if cmd:
+                          actions.append(cmd)
+                          if cmd == "reply": msg += str(act.get("args", {}).get("message", "")).lower() + " "
+              if "reply" in actions and "replace" in msg and ("sorry" in msg or "apolog" in msg): return _clamp(0.95)
+              return _clamp(0.05)
 
   - id: "task_medium"
     name: "Task Medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
     difficulty: "medium"
-    grader: "support_ops.graders:grade_task_medium"
+    graders:
+      - name: task_medium_grader
+        type: python
+        source: |
+          def _clamp(score): return max(0.01, min(0.99, float(score)))
+          def grade(sample, item):
+              msg = ""
+              actions = []
+              if isinstance(sample, dict):
+                  for act in sample.get("action_history", []):
+                      cmd = act.get("command")
+                      if cmd:
+                          actions.append(cmd)
+                          if cmd == "reply": msg += str(act.get("args", {}).get("message", "")).lower() + " "
+              if "reply" in actions and "30" in msg and "days" in msg and "look_up_order" in actions: return _clamp(0.95)
+              return _clamp(0.05)
 
   - id: "task_hard"
     name: "Task Hard"
     description: "Multi-system correlation resolving an April double-charge glitch."
     difficulty: "hard"
-    grader: "support_ops.graders:grade_task_hard"
+    graders:
+      - name: task_hard_grader
+        type: python
+        source: |
+          def _clamp(score): return max(0.01, min(0.99, float(score)))
+          def grade(sample, item):
+              actions = []
+              if isinstance(sample, dict):
+                  for act in sample.get("action_history", []):
+                      cmd = act.get("command")
+                      if cmd: actions.append(cmd)
+              if "issue_refund" in actions and "grant_credit" in actions: return _clamp(0.95)
+              return _clamp(0.05)
