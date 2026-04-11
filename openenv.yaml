@@ -22,6 +22,7 @@ tasks:
     graders:
       - name: "task_easy_grader"
         type: "python"
+        score: 1.0
         source: "tasks.task_easy.grader:grade"
 
   - id: "task_medium"
@@ -31,6 +32,7 @@ tasks:
     graders:
       - name: "task_medium_grader"
         type: "python"
+        score: 1.0
         source: "tasks.task_medium.grader:grade"
 
   - id: "task_hard"
@@ -40,4 +42,5 @@ tasks:
     graders:
       - name: "task_hard_grader"
         type: "python"
+        score: 1.0
         source: "tasks.task_hard.grader:grade"
