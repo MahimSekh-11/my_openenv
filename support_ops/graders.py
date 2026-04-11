@@ -1,11 +1,17 @@
 def extract_actions_and_messages(sample):
     actions = []
     msg = ""
-    # Support dict state
+    # Support dict state natively without mocks
     if isinstance(sample, dict):
-        actions = sample.get("actions_taken", [])
-        if sample.get("resolved"):
-            msg = "replace sorry 30 days"  # mock fallback to allow passing if explicit message isn't stored
+        action_hist = sample.get("action_history", [])
+        for act in action_hist:
+            cmd = act.get("command")
+            if cmd:
+                actions.append(cmd)
+                if cmd == "reply":
+                    args = act.get("args", {})
+                    msg += str(args.get("message", "")).lower() + " "
+                    
     # Support trajectory list
     elif isinstance(sample, list):
         for event in sample:
