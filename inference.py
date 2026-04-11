@@ -13,9 +13,9 @@ def run_inference():
     load_dotenv()
     
     # Load Environment Variables precisely as required
-    api_key = os.getenv("HF_TOKEN") 
+    api_key = os.getenv("OPENAI_API_KEY") 
     if not api_key or "your_actual_token_here" in api_key:
-        print("Error: API Key (HF_TOKEN) is missing. Please add it to your .env file.")
+        print("Error: API Key (OPENAI_API_KEY) is missing. Please add it to your .env file.")
         return
         
     api_base = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
