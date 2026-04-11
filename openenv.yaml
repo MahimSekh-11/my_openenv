@@ -19,28 +19,16 @@ tasks:
     name: "Task Easy"
     description: "Handle simple missing item report and issue replacement."
     difficulty: "easy"
-    graders:
-      - name: "task_easy_grader"
-        type: "python"
-        score: 1.0
-        source: "tasks.task_easy.grader:grade"
+    grader: "tasks.task_easy.grader:grade"
 
   - id: "task_medium"
     name: "Task Medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
     difficulty: "medium"
-    graders:
-      - name: "task_medium_grader"
-        type: "python"
-        score: 1.0
-        source: "tasks.task_medium.grader:grade"
+    grader: "tasks.task_medium.grader:grade"
 
   - id: "task_hard"
     name: "Task Hard"
-    description: "Multi-system correlation resolving an April double-charge glitch."
+    description: "Adversarial Policy Verification: Decline high-value item immediate refunds and explicitly escalate to Tier 2."
     difficulty: "hard"
-    graders:
-      - name: "task_hard_grader"
-        type: "python"
-        score: 1.0
-        source: "tasks.task_hard.grader:grade"
+    grader: "tasks.task_hard.grader:grade"
