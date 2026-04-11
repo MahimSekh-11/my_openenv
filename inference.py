@@ -13,9 +13,9 @@ def run_inference():
     load_dotenv()
     
     # Load Environment Variables precisely as required
-    api_key = os.getenv("OPENAI_API_KEY") 
+    api_key = os.getenv("HF_TOKEN") 
     if not api_key or "your_actual_token_here" in api_key:
-        print("Error: API Key (OPENAI_API_KEY) is missing. Please add it to your .env file.")
+        print("Error: API Key (HF_TOKEN) is missing. Please add it to your .env file.")
         return
         
     api_base = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
@@ -28,7 +28,7 @@ def run_inference():
     env = SupportOpsEnv()
     
     # Output Mandatory START log
-    print(f"[START] task={task_name} env={benchmark} model={model_name}")
+    print(f"[START] task={task_name}", flush=True)
     
     obs = env.reset()
     done = False
@@ -78,7 +78,7 @@ Step-by-step guidance:
             rewards.append(safe_reward)
             
             # Output Mandatory STEP log format exactly
-            print(f"[STEP] step={step_count} action={action_str} reward={safe_reward:.2f} done={str(done).lower()} error=null", flush=True)
+            print(f"[STEP] step={step_count} reward={safe_reward:.2f}", flush=True)
             
             # Attach to memory for the next loop
             messages.append({"role": "assistant", "content": raw_action})
@@ -89,15 +89,14 @@ Step-by-step guidance:
             err_msg = str(e).replace('"', "'").replace("\n", "")
             safe_reward = clamp_fractional_score(0.0)
             rewards.append(safe_reward)
-            print(f"[STEP] step={step_count} action=parse_fail reward={safe_reward:.2f} done=false error=\"{err_msg}\"", flush=True)
+            print(f"[STEP] step={step_count} reward={safe_reward:.2f}", flush=True)
             messages.append({"role": "user", "content": f"Format error: Please output valid JSON matching system instructions."})
     
     # Calculate final status
-    success = str(env.score >= 0.9).lower()
-    rewards_str = ",".join([f"{r:.2f}" for r in rewards])
+    final_score = clamp_fractional_score(env.score)
     
     # Output Mandatory END log exactly
-    print(f"[END] success={success} steps={step_count} rewards={rewards_str}", flush=True)
+    print(f"[END] task={task_name} score={final_score:.2f} steps={step_count}", flush=True)
 
 if __name__ == "__main__":
     run_inference()
