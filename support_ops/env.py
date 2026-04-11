@@ -12,6 +12,7 @@ class SupportOpsEnv:
     resolved: bool
     score: float
     actions_taken: List[str]
+    action_history: List[Dict[str, Any]]
 
     def __init__(self):
         # Allow specific task loading, defaulting to easy
@@ -50,6 +51,7 @@ class SupportOpsEnv:
         self.resolved = False
         self.score = 0.1
         self.actions_taken = []
+        self.action_history = []
         return self._get_obs("Environment starting. You have 1 unread ticket in queue.")
 
     def step(self, action: Action) -> Tuple[Observation, float, bool, dict]:
@@ -61,6 +63,7 @@ class SupportOpsEnv:
         done = False
         
         self.actions_taken.append(cmd)
+        self.action_history.append({"command": cmd, "args": args})
 
         try:
             if cmd == "read_ticket":
@@ -168,6 +171,7 @@ class SupportOpsEnv:
         return {
             "score": self.score,
             "actions_taken": self.actions_taken,
+            "action_history": self.action_history,
             "resolved": self.resolved,
             "task": self.task_name
         }
