@@ -18,47 +18,14 @@ tasks:
   - id: task_easy
     name: Task Easy
     description: Handle simple missing item report and issue replacement.
-    score: 0.35
-    graders:
-      - name: task_easy_grader
-        type: python
-        score: 0.35
-        source: |
-          def _clamp(score):
-              return max(0.01, min(0.99, float(score)))
-
-          def grade(sample, item):
-              # Keep the score strictly inside (0, 1) even on partial credit.
-              return _clamp(0.35)
+    grader: support_ops.graders:grade_task_easy
 
   - id: task_medium
     name: Task Medium
     description: Determine refund eligibility by cross-referencing order date with 30-day corporate policy.
-    score: 0.55
-    graders:
-      - name: task_medium_grader
-        type: python
-        score: 0.55
-        source: |
-          def _clamp(score):
-              return max(0.01, min(0.99, float(score)))
-
-          def grade(sample, item):
-              # Keep the score strictly inside (0, 1) even on partial credit.
-              return _clamp(0.55)
+    grader: support_ops.graders:grade_task_medium
 
   - id: task_hard
     name: Task Hard
     description: Multi-system correlation resolving an April double-charge glitch.
-    score: 0.75
-    graders:
-      - name: task_hard_grader
-        type: python
-        score: 0.75
-        source: |
-          def _clamp(score):
-              return max(0.01, min(0.99, float(score)))
-
-          def grade(sample, item):
-              # Keep the score strictly inside (0, 1) even on partial credit.
-              return _clamp(0.75)
+    grader: support_ops.graders:grade_task_hard
