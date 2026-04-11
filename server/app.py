@@ -68,6 +68,16 @@ def reset_env_top():
 def get_state_top():
     return env.state()
 
+@app.post("/step")
+def step_env_top(action: Action):
+    obs, reward_delta, done, info = env.step(action)
+    return {
+        "observation": obs.model_dump(),
+        "reward": reward_delta,
+        "done": done,
+        "info": info
+    }
+
 # GUI API Routes
 @app.post("/api/reset")
 def reset_env():
