@@ -52,17 +52,26 @@ def schema():
             "properties": {
                 "score": {"type": "number"},
                 "actions_taken": {"type": "array", "items": {"type": "string"}},
+                "action_history": {
+                    "type": "array",
+                    "items": {"type": "object"}
+                },
                 "resolved": {"type": "boolean"},
                 "task": {"type": "string"},
             },
-            "required": ["score", "actions_taken", "resolved", "task"],
+            "required": ["score", "actions_taken", "action_history", "resolved", "task"],
         },
     }
 
 @app.post("/reset")
 def reset_env_top():
-    # Maintain openenv validator compatibility
-    return env.reset().model_dump()
+    # Maintain exact openenv ResetResponse schema compatibility
+    obs = env.reset()
+    return {
+        "observation": obs.model_dump(),
+        "reward": None,
+        "done": False
+    }
 
 @app.get("/state")
 def get_state_top():
