@@ -19,16 +19,16 @@ tasks:
     name: "Task Easy"
     description: "Handle simple missing item report and issue replacement."
     difficulty: "easy"
-    grader: "graders:grade_task_easy"  # <-- Updated path
+    grader: "tasks.task_easy.grader:grade"
 
   - id: "task_medium"
     name: "Task Medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
     difficulty: "medium"
-    grader: "graders:grade_task_medium" # <-- Updated path
+    grader: "tasks.task_medium.grader:grade"
 
   - id: "task_hard"
     name: "Task Hard"
     description: "Multi-system correlation resolving an April double-charge glitch."
     difficulty: "hard"
-    grader: "graders:grade_task_hard"   # <-- Updated path
+    grader: "tasks.task_hard.grader:grade"
