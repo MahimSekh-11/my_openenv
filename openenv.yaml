@@ -15,17 +15,20 @@ models:
   reward: support_ops.schemas:Reward
 
 tasks:
-  - id: task_easy
-    name: Task Easy
-    description: Handle simple missing item report and issue replacement.
-    grader: support_ops.graders:grade_task_easy
+  - id: "task_easy"
+    name: "Task Easy"
+    description: "Handle simple missing item report and issue replacement."
+    difficulty: "easy"
+    grader: "support_ops.graders:grade_task_easy"
 
-  - id: task_medium
-    name: Task Medium
-    description: Determine refund eligibility by cross-referencing order date with 30-day corporate policy.
-    grader: support_ops.graders:grade_task_medium
+  - id: "task_medium"
+    name: "Task Medium"
+    description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
+    difficulty: "medium"
+    grader: "support_ops.graders:grade_task_medium"
 
-  - id: task_hard
-    name: Task Hard
-    description: Multi-system correlation resolving an April double-charge glitch.
-    grader: support_ops.graders:grade_task_hard
+  - id: "task_hard"
+    name: "Task Hard"
+    description: "Multi-system correlation resolving an April double-charge glitch."
+    difficulty: "hard"
+    grader: "support_ops.graders:grade_task_hard"
