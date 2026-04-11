@@ -3,7 +3,7 @@ from typing import Dict, Any, Optional
 
 class Action(BaseModel):
     thought: str = Field(..., description="Internal reasoning before deciding on the action.")
-    command: str = Field(..., description="Action command (e.g., search_kb, look_up_order, view_billing, issue_refund, grant_credit, reply)")
+    command: str = Field(..., description="Action command (e.g., search_kb, look_up_order, view_billing, issue_refund, grant_credit, escalate_to_tier2, request_user_info, reply)")
     args: Dict[str, Any] = Field(default_factory=dict, description="Arguments for the command.")
 
 class Observation(BaseModel):
