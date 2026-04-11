@@ -19,16 +19,25 @@ tasks:
     name: "Task Easy"
     description: "Handle simple missing item report and issue replacement."
     difficulty: "easy"
-    grader: "tasks.task_easy.grader:grade"
+    graders:
+      - name: "task_easy_grader"
+        type: "python"
+        source: "tasks.task_easy.grader:grade"
 
   - id: "task_medium"
     name: "Task Medium"
     description: "Determine refund eligibility by cross-referencing order date with 30-day corporate policy."
     difficulty: "medium"
-    grader: "tasks.task_medium.grader:grade"
+    graders:
+      - name: "task_medium_grader"
+        type: "python"
+        source: "tasks.task_medium.grader:grade"
 
   - id: "task_hard"
     name: "Task Hard"
     description: "Multi-system correlation resolving an April double-charge glitch."
     difficulty: "hard"
-    grader: "tasks.task_hard.grader:grade"
+    graders:
+      - name: "task_hard_grader"
+        type: "python"
+        source: "tasks.task_hard.grader:grade"
